@@ -4,13 +4,14 @@ int currentChar; // 当前标记
 int lineNum = 0; // 源码行号
 int charNum = 0; //字符总数
 
-char *keywords[34] = {
+//
+const char *keywords[34] = {
     "#include", "#define", "auto", "break", "case", "char", "const", "continue", "defualt", "do",
     "double", "else", "enum", "extern", "float", "for", "goto", "if",
     "int", "long", "register", "return", "short", "signed", "sizeof", "static",
     "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while"};
 //能够支持的标记符
-char *tokens[31] = {
+const char *tokens[31] = {
     "Num", "Id", "Str", "Keyword", "Assign", "Lor", "Or", "Not", "Xor", "And",
     "Lan", "Eq", "Ne", "Lt", "Gt", "Le", "Ge", "Shl", "Shr", "Add",
     "Sub", "Mul", "Div", "Mod", "Inc", "Dec", "Separator", "Tilde", "Esc", "Sharp", "Other"};
@@ -25,8 +26,8 @@ enum
     Or,
     Not,
     Xor,
-    Lan,
     And,
+    Lan,
     Eq,
     Ne,
     Lt,
@@ -372,18 +373,18 @@ struct node *next(struct node *p, char *fp, int *fpos)
 }
 
 //语法分析的入口，分析整个 C 语言程序。
-void gramAnalyser(struct node *p, char fp, FILE *outputFile)
+void gramAnalyser(struct node *p, char *fp, FILE *outputFile)
 {
     printf("The output produced by Lexcial analyzer: \n");
     int fpos = 0;
-    next(p, &fp, &fpos);
+    next(p, fp, &fpos);
     // 获取下一个标记
     while (currentChar > 0)
     {
         printf("< %s , %s >\n", tokens[p->type], p->value);
         fprintf(outputFile, "< %s , %s >\n", tokens[p->type], p->value);
         p = p->next;
-        next(p, &fp, &fpos);
+        next(p, fp, &fpos);
     }
     printf("The sum of character is %d\n", charNum);
     fprintf(outputFile, "The sum of character is %d\n", charNum);

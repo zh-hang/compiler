@@ -1,3 +1,6 @@
+#ifndef GRAMANALYSER_H
+#define GRAMANALYSER_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
@@ -16,3 +19,4 @@ typedef struct node
 struct node *next(struct node *p, char*fp,int *fpos);
 
 void gramAnalyser(struct node *p, char *fp, FILE *outputFile);
+#endif

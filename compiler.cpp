@@ -18,8 +18,6 @@ int main()
     printf("*****Lexcial analyzer******\n");
     printf("***************************\n");
     printf("\n");
-    printf("\n");
-    printf("\n");
     printf("Input the filename with postfix: ");
     scanf("%s", fileName);
     char path[60] = "simple/";

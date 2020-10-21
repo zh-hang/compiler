@@ -1,12 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <memory.h>
-#include <string.h>
-#define SIZE 10240 //默认大小
+#include "gramAnalyser.h"
 
-int currentChar;       // 当前标记
-char *fp;       // 指向源代码字符串指针
-int poolsize;    // 默认文本/数据大小
+int currentChar; // 当前标记
 int lineNum = 0; // 源码行号
 int charNum = 0; //字符总数
 
@@ -52,15 +46,8 @@ enum
     Other
 };
 
-typedef struct node
-{
-    int type;
-    char value[12];
-    struct node *next;
-} node;
-
 //用于词法分析，获取下一个标记，它将自动忽略空白字符。
-struct node *next(struct node *p)
+struct node *next(struct node *p, char *fp)
 {
     int num = 0, type, i, j;
     char value[12] = {0};
@@ -390,11 +377,11 @@ struct node *next(struct node *p)
             fp++;
             break;
         }
-        else if (currentChar==9)
+        else if (currentChar == 9)
         {
             continue;
         }
-        
+
         else if (currentChar == 0)
             break;
         else
@@ -419,75 +406,21 @@ struct node *next(struct node *p)
 }
 
 //语法分析的入口，分析整个 C 语言程序。
-void program(struct node *p, FILE *outputFile)
+void gramAnalyser(struct node *p, char *fp, FILE *outputFile)
 {
     printf("The output produced by Lexcial analyzer: \n");
-    p = next(p);
+    p = next(p, fp);
     // 获取下一个标记
     while (currentChar > 0)
     {
         printf("< %s , %s >\n", tokens[p->type], p->value);
         fprintf(outputFile, "< %s , %s >\n", tokens[p->type], p->value);
         p = p->next;
-        next(p);
+        next(p, fp);
     }
     printf("The sum of character is %d\n", charNum);
     fprintf(outputFile, "The sum of character is %d\n", charNum);
     printf("Sum of the line: %d\n", lineNum);
     fprintf(outputFile, "Sum of the line: %d\n", lineNum);
     printf("\n\ndata has been written into output.txt\n\n");
-}
-
-//主函数
-int main(void)
-{
-    int i;
-    FILE *inputFile, *outputFile;
-    char *fileName=(char*)malloc(sizeof(char)*50);
-    struct node *head;
-
-    head = (node *)malloc(sizeof(node));
-    head->next = NULL;
-    printf("***************************\n");
-    printf("*****Lexcial analyzer******\n");
-    printf("***************************\n");
-    printf("\n");
-    printf("\n");
-    printf("\n");
-    printf("Input the filename with postfix: ");
-    scanf("%s", fileName);
-    char path[60]="simple/";
-    i=0;
-    while (*fileName!='\0')
-        path[i+++7]=*fileName++;
-    i=0;
-    if ((inputFile = fopen(path, "r")) == NULL)
-    {
-        printf("could not open(%s)\n", path);
-        return -1;
-    }
-    if ((outputFile = fopen("simple/output.txt", "w")) == NULL)
-    {
-        printf("could not open(%s)\n", "simple/output.txt");
-        return -1;
-    }
-    if (!(fp = (char *)malloc(SIZE)))
-    {
-        printf("could not malloc(%d) for source area\n", poolsize);
-        fprintf(outputFile,"could not malloc(%d) for source area\n", poolsize);
-        return -1;
-    }
-    // 读取源文件
-    if ((i = fread(fp, 1, SIZE, inputFile)) <= 0)
-    {
-        printf("read() returned %d\n", i);
-        fprintf(outputFile,"read() returned %d\n", i);
-        return -1;
-    }
-    fp[i] = 0; // 添加EOF字符
-    fclose(inputFile);
-    program(head, outputFile);
-    system("pause");
-    fclose(outputFile);
-    return 0;
 }

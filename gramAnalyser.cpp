@@ -172,7 +172,7 @@ struct node *next(struct node *p, char *fp, int *fpos)
         case '#': //预处理和宏定义
             i = 0;
             value[i] = currentChar;
-            if (fp[*fpos] == "i")
+            if (fp[*fpos] == 'i')
             {
                 char in[] = "include";
                 int pos = *fpos;
@@ -183,7 +183,7 @@ struct node *next(struct node *p, char *fp, int *fpos)
                 }
                 if (i == 7)
                 {
-                    while (fp[(*fpos)++] != e)
+                    while (fp[(*fpos)++] != 'e')
                     {
                         i++;
                         value[i] = fp[*fpos];
@@ -192,18 +192,18 @@ struct node *next(struct node *p, char *fp, int *fpos)
                     break;
                 }
             }
-            else if (fp[*fpos] == "d")
+            else if (fp[*fpos] == 'd')
             {
-                char de[] = "include";
+                char de[] = "define";
                 int pos = *fpos;
                 for (i = 0; i < 6; i++)
                 {
-                    if (fp[pos + i] != in[i])
+                    if (fp[pos + i] != de[i])
                         break;
                 }
                 if (i == 6)
                 {
-                    while (fp[(*fpos)++] != e)
+                    while (fp[(*fpos)++] != 'e')
                     {
                         i++;
                         value[i] = fp[*fpos];

@@ -12,6 +12,7 @@ typedef struct node
     struct node *next;
 } node;
 
-struct node *next(struct node *p, char *fp);
+//获取下一个字符，p结点，fp文件字符串，fpos指针位置
+struct node *next(struct node *p, char*fp,int *fpos);
 
 void gramAnalyser(struct node *p, char *fp, FILE *outputFile);

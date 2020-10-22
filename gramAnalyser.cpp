@@ -132,7 +132,7 @@ struct node *next(struct node *p, char *fp, int *fpos)
                 else if (!isNum && fp[*fpos] == '.')
                     printf("line:%d Error: Illeagle character!", lineNum);
             }
-            value[i] = '\0';
+            value[++i] = '\0';
             type = Num;
             break;
         }

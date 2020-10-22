@@ -1,0 +1,172 @@
+< Keyword , #include >
+< Lt , < >
+< Id , stdio >
+< Dot , . >
+< Id , h >
+< Lt , > >
+< Keyword , #define >
+< Id , ARR_LEN >
+< Num , 25 >
+< Keyword , #define >
+< Id , elemType >
+< Keyword , int >
+< Keyword , void >
+< Id , bubbleSort >
+< Separator , ( >
+< Id , elemType >
+< Id , arr >
+< Separator , [ >
+< Separator , ] >
+< Separator , , >
+< Keyword , int >
+< Id , len >
+< Separator , ) >
+< Separator , { >
+< Id , elemType >
+< Id , temp >
+< Separator , ; >
+< Keyword , int >
+< Id , i >
+< Separator , , >
+< Id , j >
+< Separator , ; >
+< Keyword , for >
+< Separator , ( >
+< Id , i >
+< Num ,  >
+< Separator , ; >
+< Id , len >
+< Num ,  >
+< Separator , ; >
+< Id , i >
+< Sub , -+ >
+< Separator , ) >
+< Keyword , for >
+< Separator , ( >
+< Id , j >
+< Num ,  >
+< Separator , ; >
+< Id , len >
+< Id , i >
+< Separator , ; >
+< Id , j >
+< Sub , -+ >
+< Separator , ) >
+< Keyword , if >
+< Separator , ( >
+< Id , arr >
+< Separator , [ >
+< Id , j >
+< Separator , ] >
+< Id , arr >
+< Separator , [ >
+< Id , j >
+< Num ,  >
+< Separator , ] >
+< Separator , ) >
+< Id , temp >
+< Id , arr >
+< Separator , [ >
+< Id , j >
+< Separator , ] >
+< Separator , ; >
+< Id , arr >
+< Separator , [ >
+< Id , j >
+< Separator , ] >
+< Id , arr >
+< Separator , [ >
+< Id , j >
+< Num ,  >
+< Separator , ] >
+< Separator , ; >
+< Id , arr >
+< Separator , [ >
+< Id , j >
+< Num ,  >
+< Separator , ] >
+< Id , temp >
+< Separator , ; >
+< Separator , } >
+< Separator , } >
+< Separator , } >
+< Keyword , int >
+< Id , main >
+< Separator , ( >
+< Keyword , void >
+< Separator , ) >
+< Separator , { >
+< Id , elemType >
+< Id , arr >
+< Separator , [ >
+< Id , ARR_LEN >
+< Separator , ] >
+< Separator , { >
+< Num ,  >
+< Separator , , >
+< Num ,  >
+< Separator , , >
+< Num ,  >
+< Separator , , >
+< Sub , - >
+< Num ,  >
+< Separator , , >
+< Num ,  >
+< Separator , , >
+< Num ,  >
+< Separator , , >
+< Sub , - >
+< Num ,  >
+< Separator , , >
+< Num ,  >
+< Separator , , >
+< Num , 1 >
+< Separator , , >
+< Num ,  >
+< Separator , } >
+< Separator , ; >
+< Keyword , int >
+< Id , len >
+< Num , 1 >
+< Separator , ; >
+< Keyword , int >
+< Id , i >
+< Separator , ; >
+< Id , bubbleSort >
+< Separator , ( >
+< Id , arr >
+< Separator , , >
+< Id , len >
+< Separator , ) >
+< Separator , ; >
+< Keyword , for >
+< Separator , ( >
+< Id , i >
+< Num ,  >
+< Separator , ; >
+< Id , len >
+< Separator , ; >
+< Id , i >
+< Sub , -+ >
+< Separator , ) >
+< Id , printf >
+< Separator , ( >
+< Str , "%d\t" >
+< Separator , , >
+< Id , arr >
+< Separator , [ >
+< Id , i >
+< Separator , ] >
+< Separator , ) >
+< Separator , ; >
+< Id , putchar >
+< Separator , ( >
+< Char , '\n' >
+< Separator , ) >
+< Separator , ; >
+< Keyword , return >
+< Num ,  >
+< Separator , ; >
+< Separator , } >
+The sum of character is 336
+Sum of the line: 37

@@ -1,7 +1,7 @@
 #include "gramAnalyser.h"
 
 int currentChar; // 当前标记
-int lineNum = 0; // 源码行号
+int lineNum = 1; // 源码行号
 int charNum = 0; //字符总数
 
 //
@@ -11,14 +11,15 @@ const char *keywords[34] = {
     "int", "long", "register", "return", "short", "signed", "sizeof", "static",
     "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while"};
 //能够支持的标记符
-const char *tokens[31] = {
-    "Num", "Id", "Str", "Keyword", "Assign", "Lor", "Or", "Not", "Xor", "And",
+const char *tokens[33] = {
+    "Num", "Id", "Char", "Str", "Keyword", "Assign", "Lor", "Or", "Not", "Xor", "And",
     "Lan", "Eq", "Ne", "Lt", "Gt", "Le", "Ge", "Shl", "Shr", "Add",
-    "Sub", "Mul", "Div", "Mod", "Inc", "Dec", "Separator", "Tilde", "Esc", "Sharp", "Other"};
+    "Sub", "Mul", "Div", "Mod", "Inc", "Dec", "Separator", "Tilde", "Esc", "Sharp", "Dot", "Other"};
 enum
 {
     Num = 0,
     Id,
+    Char,
     Str,
     Keyword,
     Assign,
@@ -47,22 +48,56 @@ enum
     Tilde,
     Esc,
     Sharp,
+    Dot,
     Other
 };
 
 struct node *next(struct node *p, char *fp, int *fpos)
 {
     int type, i, j;
-    char value[12] = {0};
+    char value[255] = {0};
     while (1)
     {
         charNum++;
         currentChar = fp[*fpos];
         (*fpos)++;
 
-        if (currentChar == '\n' || 9)
+        if (currentChar == '\'')
+        {
+            i = 0;
+            value[i] = currentChar;
+            while (fp[*fpos] != '\'')
+                value[++i] = fp[(*fpos)++];
+            value[++i] = fp[(*fpos)++];
+            value[++i] = '\0';
+            type = Char;
+            break;
+        }
+        else if (currentChar == '"')
+        {
+            i = 0;
+            value[i] = currentChar;
+            while (fp[*fpos] != '"')
+                value[++i] = fp[(*fpos)++];
+            value[++i] = fp[(*fpos)++];
+            value[++i] = '\0';
+            type = Str;
+            break;
+        }
+
+        if (currentChar == '\n')
         { //处理换行符,当前的行号加一
             lineNum++;
+            continue;
+        }
+        else if (currentChar == ' ') //忽略空格
+        {
+            while (fp[(*fpos + 1)] == ' ')
+                (*fpos)++;
+            continue;
+        }
+        else if (currentChar == 9)
+        {
             continue;
         }
         else if ((currentChar >= 'a' && currentChar <= 'z') || (currentChar >= 'A' && currentChar <= 'Z') || (currentChar == '_'))
@@ -71,7 +106,7 @@ struct node *next(struct node *p, char *fp, int *fpos)
             value[i] = currentChar;
             while (fp[*fpos] >= 'a' && fp[*fpos] <= 'z' || fp[*fpos] >= 'A' && fp[*fpos] <= 'Z' || fp[*fpos] >= '0' && fp[*fpos] <= '9' || fp[*fpos] == '_')
                 value[++i] = fp[(*fpos)++];
-            value[i] = '\0';
+            value[++i] = '\0';
             for (j = 0; j < 34; j++)
             {
                 if (strcmp(value, keywords[j]) == 0)
@@ -87,7 +122,7 @@ struct node *next(struct node *p, char *fp, int *fpos)
         else if (currentChar >= '0' && currentChar <= '9')
         { //数字
             i = 0;
-            value[i++] = currentChar;
+            value[i] = currentChar;
             bool isNum = true;
             while (fp[*fpos] >= '0' && fp[*fpos] <= '9')
             {
@@ -95,7 +130,7 @@ struct node *next(struct node *p, char *fp, int *fpos)
                 if (isNum && fp[*fpos] == '.')
                     isNum = false;
                 else if (!isNum && fp[*fpos] == '.')
-                    printf("line:%d Error: illegible etymology", lineNum);
+                    printf("line:%d Error: Illeagle character!", lineNum);
             }
             value[i] = '\0';
             type = Num;
@@ -129,13 +164,14 @@ struct node *next(struct node *p, char *fp, int *fpos)
         case ';':
             type = Separator;
             value[0] = ';';
+            break;
         case '{':
             type = Separator;
             value[0] = '{';
             break;
         case '}':
             type = Separator;
-            value[0];
+            value[0] = '}';
             break;
         case '(':
             value[0] = '(';
@@ -149,10 +185,6 @@ struct node *next(struct node *p, char *fp, int *fpos)
             value[0] = ',';
             type = Separator;
             break;
-        case '.':
-            value[0] = '.';
-            type = Separator;
-            break;
         case '?':
             value[0] = '?';
             type = Separator;
@@ -160,15 +192,16 @@ struct node *next(struct node *p, char *fp, int *fpos)
         case '~':
             value[0] = '~';
             type = Tilde;
+            break;
+        case '.':
+            value[0] = '.';
+            type = Dot;
+            break;
         case '\\':
             type = Esc;
             value[0] = '\\';
             value[1] = *fp;
             (*fpos)++;
-            break;
-        case ' ': //忽略空格
-            while (fp[*fpos] != ' ')
-                (*fpos)++;
             break;
         case '#': //预处理和宏定义
             i = 0;
@@ -184,11 +217,9 @@ struct node *next(struct node *p, char *fp, int *fpos)
                 }
                 if (i == 7)
                 {
-                    while (fp[(*fpos)++] != 'e')
-                    {
-                        i++;
-                        value[i] = fp[*fpos];
-                    }
+                    i = 0;
+                    while (fp[*fpos] != ' ')
+                        value[++i] = fp[(*fpos)++];
                     type = Keyword;
                     break;
                 }
@@ -204,11 +235,9 @@ struct node *next(struct node *p, char *fp, int *fpos)
                 }
                 if (i == 6)
                 {
-                    while (fp[(*fpos)++] != 'e')
-                    {
-                        i++;
-                        value[i] = fp[*fpos];
-                    }
+                    i = 0;
+                    while (fp[*fpos] != ' ')
+                        value[++i] = fp[(*fpos)++];
                     type = Keyword;
                     break;
                 }
@@ -224,17 +253,19 @@ struct node *next(struct node *p, char *fp, int *fpos)
                 while (fp[(*fpos)++] != '\0')
                 {
                     if (fp[*fpos] == '\0')
-                        printf("line:%d Error: Except */\n", lineNum);
+                        printf("line:%d Error: Except */.\n", lineNum);
                     else if (fp[*fpos] == '*')
                     {
-                        if (fp[(*fpos) + 1] == '/')
-                            break;
-                        else
+                        (*fpos)++;
+                        if (fp[*fpos] == '/')
+                        {
                             (*fpos)++;
+                            break;
+                        }
                     }
                 }
             }
-            break;
+            continue;
         case '<':
             if (fp[*fpos] == '=')
             {
@@ -351,17 +382,17 @@ struct node *next(struct node *p, char *fp, int *fpos)
                 type = Sub;
                 value[0] = '-';
             }
+        case '\0':
+            break;
         default:
-            printf("Error occurred in line%d!\n", lineNum);
-            //printf("%c\n",*src);
-            //printf("%c\n",*src--);
+            printf("line:%d Error: Illeagle character!\n", lineNum);
             type = Other;
             value[0] = currentChar;
             break;
         }
         break;
     }
-    for (i = 0; i < 12; i++)
+    for (i = 0; i < 255; i++)
     {
         p->value[i] = value[i];
     }

@@ -11,7 +11,7 @@
 typedef struct node
 {
     int type;
-    char value[12];
+    char value[255];
     struct node *next;
 } node;
 

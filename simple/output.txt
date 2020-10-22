@@ -6,7 +6,7 @@
 < Lt , > >
 < Keyword , #define >
 < Id , ARR_LEN >
-< Num , 25 >
+< Num , 255 >
 < Keyword , #define >
 < Id , elemType >
 < Keyword , int >
@@ -33,10 +33,10 @@
 < Keyword , for >
 < Separator , ( >
 < Id , i >
-< Num ,  >
+< Num , 0 >
 < Separator , ; >
 < Id , len >
-< Num ,  >
+< Num , 1 >
 < Separator , ; >
 < Id , i >
 < Sub , -+ >
@@ -44,7 +44,7 @@
 < Keyword , for >
 < Separator , ( >
 < Id , j >
-< Num ,  >
+< Num , 0 >
 < Separator , ; >
 < Id , len >
 < Id , i >
@@ -61,7 +61,7 @@
 < Id , arr >
 < Separator , [ >
 < Id , j >
-< Num ,  >
+< Num , 1 >
 < Separator , ] >
 < Separator , ) >
 < Id , temp >
@@ -77,13 +77,13 @@
 < Id , arr >
 < Separator , [ >
 < Id , j >
-< Num ,  >
+< Num , 1 >
 < Separator , ] >
 < Separator , ; >
 < Id , arr >
 < Separator , [ >
 < Id , j >
-< Num ,  >
+< Num , 1 >
 < Separator , ] >
 < Id , temp >
 < Separator , ; >
@@ -102,32 +102,32 @@
 < Id , ARR_LEN >
 < Separator , ] >
 < Separator , { >
-< Num ,  >
+< Num , 3 >
 < Separator , , >
-< Num ,  >
-< Separator , , >
-< Num ,  >
-< Separator , , >
-< Sub , - >
-< Num ,  >
-< Separator , , >
-< Num ,  >
-< Separator , , >
-< Num ,  >
-< Separator , , >
-< Sub , - >
-< Num ,  >
-< Separator , , >
-< Num ,  >
+< Num , 5 >
 < Separator , , >
 < Num , 1 >
 < Separator , , >
-< Num ,  >
+< Sub , - >
+< Num , 7 >
+< Separator , , >
+< Num , 4 >
+< Separator , , >
+< Num , 9 >
+< Separator , , >
+< Sub , - >
+< Num , 6 >
+< Separator , , >
+< Num , 8 >
+< Separator , , >
+< Num , 10 >
+< Separator , , >
+< Num , 4 >
 < Separator , } >
 < Separator , ; >
 < Keyword , int >
 < Id , len >
-< Num , 1 >
+< Num , 10 >
 < Separator , ; >
 < Keyword , int >
 < Id , i >
@@ -142,7 +142,7 @@
 < Keyword , for >
 < Separator , ( >
 < Id , i >
-< Num ,  >
+< Num , 0 >
 < Separator , ; >
 < Id , len >
 < Separator , ; >
@@ -165,7 +165,7 @@
 < Separator , ) >
 < Separator , ; >
 < Keyword , return >
-< Num ,  >
+< Num , 0 >
 < Separator , ; >
 < Separator , } >
 The sum of character is 336

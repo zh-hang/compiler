@@ -92,7 +92,7 @@ struct node *next(struct node *p, char *fp, int *fpos)
         }
         else if (currentChar == ' ') //忽略空格
         {
-            while (fp[(*fpos + 1)] == ' ')
+            while (fp[(*fpos)] == ' ')
                 (*fpos)++;
             continue;
         }

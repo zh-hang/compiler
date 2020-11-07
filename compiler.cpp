@@ -20,19 +20,19 @@ int main()
     printf("\n");
     printf("Input the filename with postfix: ");
     scanf("%s", fileName);
-    char path[60] = "simple/";
+    char path[60] = "samples/";
     i = 0;
     while (*fileName != '\0')
-        path[i++ + 7] = *fileName++;
+        path[i++ + 8] = *fileName++;
     i = 0;
     if ((inputFile = fopen(path, "r")) == NULL)
     {
         printf("could not open(%s)\n", path);
         return -1;
     }
-    if ((outputFile = fopen("simple/output.txt", "w")) == NULL)
+    if ((outputFile = fopen("samples/output.txt", "w")) == NULL)
     {
-        printf("could not open(%s)\n", "simple/output.txt");
+        printf("could not open(%s)\n", "samples/output.txt");
         return -1;
     }
     if (!(fp = (char *)malloc(SIZE)))

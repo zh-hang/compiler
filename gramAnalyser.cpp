@@ -5,52 +5,6 @@ int lineNum = 1; // 源码行号
 int charNum = 0; //字符总数
 
 //
-const char *keywords[34] = {
-    "#include", "#define", "auto", "break", "case", "char", "const", "continue", "defualt", "do",
-    "double", "else", "enum", "extern", "float", "for", "goto", "if",
-    "int", "long", "register", "return", "short", "signed", "sizeof", "static",
-    "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while"};
-//能够支持的标记符
-const char *tokens[33] = {
-    "Num", "Id", "Char", "Str", "Keyword", "Assign", "Lor", "Or", "Not", "Xor", "And",
-    "Lan", "Eq", "Ne", "Lt", "Gt", "Le", "Ge", "Shl", "Shr", "Add",
-    "Sub", "Mul", "Div", "Mod", "Inc", "Dec", "Separator", "Tilde", "Esc", "Sharp", "Dot", "Other"};
-enum
-{
-    Num = 0,
-    Id,
-    Char,
-    Str,
-    Keyword,
-    Assign,
-    Lor,
-    Or,
-    Not,
-    Xor,
-    And,
-    Lan,
-    Eq,
-    Ne,
-    Lt,
-    Gt,
-    Le,
-    Ge,
-    Shl,
-    Shr,
-    Add,
-    Sub,
-    Mul,
-    Div,
-    Mod,
-    Inc,
-    Dec,
-    Separator,
-    Tilde,
-    Esc,
-    Sharp,
-    Dot,
-    Other
-};
 
 struct node *next(struct node *p, char *fp, int *fpos)
 {
@@ -403,7 +357,7 @@ struct node *next(struct node *p, char *fp, int *fpos)
     return p;
 }
 
-//语法分析的入口，分析整个 C 语言程序。
+//词法分析的入口，分析整个 C 语言程序。
 void gramAnalyser(struct node *p, char *fp, FILE *outputFile)
 {
     printf("The output produced by Lexcial analyzer: \n");

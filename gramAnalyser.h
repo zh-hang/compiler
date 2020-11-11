@@ -72,7 +72,10 @@ public:
         value = "";
         type = NULL;
     }
-    void judgeType(string file, int *pos);
+    void judgeType();
+    bool isString();
+    bool isDigital();
+    bool isComment(); 
 };
 
 class fileText
@@ -80,13 +83,18 @@ class fileText
     string text;
     token *currToken;
     vector<token> tokens[SIZE];
+    int lineNum;
+    int tokenNum;
+
 public:
     fileText(string t)
     {
         text = t;
         currToken = new token();
+        lineNum = 1;
+        tokenNum = 0;
     }
-    void tokenAnalyser();
+    void tokenAnalyser(); 
 };
 
 typedef struct node

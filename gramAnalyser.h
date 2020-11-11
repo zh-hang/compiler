@@ -67,15 +67,13 @@ class token
     int type;
 
 public:
-    token()
+    token(char t)
     {
-        value = "";
+        value = t;
         type = NULL;
     }
     void judgeType();
-    bool isString();
-    bool isDigital();
-    bool isComment(); 
+    void addValue(string t);
 };
 
 class fileText
@@ -90,7 +88,7 @@ public:
     fileText(string t)
     {
         text = t;
-        currToken = new token();
+        currToken = new token(text[0]);
         lineNum = 1;
         tokenNum = 0;
     }

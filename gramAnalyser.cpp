@@ -378,17 +378,6 @@ void gramAnalyser(struct node *p, char *fp, FILE *outputFile)
     printf("\n\ndata has been written into output.txt\n\n");
 }
 
-bool token::isString(){
-    return true;
-}
-
-bool token::isDigital(){
-    return true;
-}
-
-bool token::isComment(){
-    return true;
-}
 
 void token::judgeType(){
 

@@ -63,17 +63,18 @@ enum
 
 class token
 {
+public:
     string value;
     int type;
-
-public:
-    token(char t)
+    token()
     {
-        value = t;
+        value = "";
         type = NULL;
     }
-    void judgeType();
-    void addValue(string t);
+    bool isString();
+    bool isDigist();
+    bool isComment();
+    bool isSharp();
 };
 
 class fileText
@@ -88,7 +89,7 @@ public:
     fileText(string t)
     {
         text = t;
-        currToken = new token(text[0]);
+        currToken = new token();
         lineNum = 1;
         tokenNum = 0;
     }

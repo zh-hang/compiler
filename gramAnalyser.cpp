@@ -379,10 +379,13 @@ void gramAnalyser(struct node *p, char *fp, FILE *outputFile)
 }
 
 
-void token::judgeType(){
-
-}
-
 void fileText::tokenAnalyser(){
+    int pos=0;
+    while (text[pos]!='\0')
+    {
+        currToken->value+=text[pos];
+        pos++;
+        currToken
+    }
     
 }

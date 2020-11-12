@@ -378,14 +378,188 @@ void gramAnalyser(struct node *p, char *fp, FILE *outputFile)
     printf("\n\ndata has been written into output.txt\n\n");
 }
 
-
-void fileText::tokenAnalyser(){
-    int pos=0;
-    while (text[pos]!='\0')
+void fileText::judgeToken()
+{
+    while (1)
     {
-        currToken->value+=text[pos];
+        currToken->value = text[pos];
         pos++;
-        currToken
+        if (currToken->value[0] == '\n')
+        {
+            lineNum++;
+            continue;
+        }
+        else if (currToken->value[0] == ' ')
+        {
+            while (text[pos] == ' ')
+                pos++;
+            continue;
+        }
+        else if (currToken->value[0] == 9)
+            continue;
+        else if (currToken->value[0] == '\'')
+        {
+            while (text[pos] != '\'')
+                currToken->value += text[pos++];
+            currToken->value = Char;
+            break;
+        }
+        else if (currToken->value[0] == '"')
+        {
+            while (text[pos] != '"')
+                currToken->value += text[pos++];
+            currToken->type = Str;
+            break;
+        }
+        else if ((currToken->value[0] >= 'a' && currToken->value[0] <= 'z') || (currToken->value[0] >= 'A' && currToken->value[0] <= 'Z') || (currToken->value[0] == '_'))
+        {
+            ifKeywordorId();
+            break;
+        }
+        else if (currToken->value[0] >= '0' && currToken->value[0] <= '9')
+        {
+            ifDigital();
+            break;
+        }
+        else if (currToken->value[0] == '#')
+        {
+            ifSharp();
+            break;
+        }
+        else if (currToken->value[0] == '/')
+        {
+            ifComment();
+            continue;
+        }
+        switch (currToken->value[0])
+        {
+        case '[':
+        case ']':
+        case '{':
+        case '}':
+        case '(':
+        case ')':
+        case ';':
+        case ',':
+        case '?':
+            currToken->type = Separator;
+        case '~':
+            currToken->type = Tilde;
+            break;
+        case '.':
+            currToken->type = Dot;
+            break;
+        case '*':
+            currToken->type = Mul;
+            break;
+        case '^':
+            currToken->type = Xor;
+            break;
+        case '%':
+            currToken->type = Mod;
+            break;
+        case '\\':
+            currToken->type = Esc;
+            break;
+        case '<':
+            if (text[pos] == '=')
+            {
+                currToken->value += text[pos++];
+                currToken->type = Le;
+            }
+            else if (text[pos] == '<')
+            {
+                currToken->value += text[pos++];
+                currToken->type = Shl;
+            }
+            else
+                currToken->type = Lt;
+            break;
+        case '>':
+            if (text[pos] == '=')
+            {
+                currToken->value += text[pos++];
+                currToken->type = Ge;
+            }
+            else if (text[pos] == '>')
+            {
+                currToken->value += text[pos++];
+                currToken->type = Shr;
+            }
+            else
+                currToken->type = Gt;
+            break;
+        case '=':
+            if (text[pos] == '=')
+            {
+                currToken->value += text[pos++];
+                currToken->type = Eq;
+                break;
+            }
+            currToken->type = Assign;
+            break;
+        case '!':
+            if (text[pos] == '=')
+            {
+                currToken->value += text[pos++];
+                currToken->type = Ne;
+                break;
+            }
+            currToken->type = Not;
+            break;
+        case '|':
+            if (text[pos] == '|')
+            {
+                currToken->value += text[pos++];
+                currToken->type = Lor;
+                break;
+            }
+            currToken->type = Or;
+            break;
+        case '&':
+            if (text[pos] == '&')
+            {
+                currToken->value += text[pos++];
+                currToken->type = Lan;
+                break;
+            }
+            currToken->type = And;
+            break;
+        case '+':
+            if (text[pos] == '+')
+            {
+                currToken->value += text[pos++];
+                currToken->type = Inc;
+                break;
+            }
+            currToken->type = Add;
+            break;
+        case '-':
+            if (text[pos] == '-')
+            {
+                currToken->value += text[pos++];
+                currToken->type = Dec;
+                break;
+            }
+            currToken->type = Sub;
+            break;
+        case '\0':
+            break;
+        default:
+            cout << "line:" << lineNum << " Error: Illeagle character!" << endl;
+            currToken->type = Other;
+            break;
+        }
     }
-    
+}
+
+void fileText::tokenAnalyser()
+{
+    while (text[pos] > 0)
+    {
+        judgeToken();
+        tokens->push_back(*currToken);
+        cout << *currToken << endl;
+        charNum++;
+    }
 }

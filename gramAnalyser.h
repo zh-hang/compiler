@@ -71,10 +71,10 @@ public:
         value = "";
         type = NULL;
     }
-    bool isString();
-    bool isDigist();
-    bool isComment();
-    bool isSharp();
+    friend ostream & operator<<(ostream &out,token &t){
+        out<<"<"<<t.type<<","<<t.value<<">";
+        return out;
+    }
 };
 
 class fileText
@@ -82,6 +82,7 @@ class fileText
     string text;
     token *currToken;
     vector<token> tokens[SIZE];
+    int pos;
     int lineNum;
     int tokenNum;
 
@@ -92,8 +93,14 @@ public:
         currToken = new token();
         lineNum = 1;
         tokenNum = 0;
+        pos=0;
     }
-    void tokenAnalyser(); 
+    void tokenAnalyser();
+    void judgeToken();
+    void ifKeywordorId();
+    void ifDigital();
+    void ifSharp();
+    void ifComment();
 };
 
 typedef struct node

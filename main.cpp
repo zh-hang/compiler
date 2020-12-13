@@ -14,5 +14,7 @@ int main()
     {
         std::cerr << e.what() << '\n';
     }
+    int a;
+    cin >> a;
     return 0;
 }

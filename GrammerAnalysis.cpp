@@ -196,12 +196,17 @@ void GrammerAnalysis::buildTable()
     int counter = 0;
     for (int i = 0; i < TERM_NUM; i++)
     {
-        cout << "\t\t" << this->term->term[i];
+        cout.width(12);
+        cout.setf(ios::left);
+        cout << this->term->term[i];
     }
     cout << '\n';
     while (counter < 45)
     {
-        cout << "\t\t" << *(p++);
+        cout.width(12);
+        cout.setf(ios::left);
+        cout.left;
+        cout << *(p++);
         c = (c + 1) % TERM_NUM;
         ++counter;
         if (c == 0)
@@ -210,8 +215,7 @@ void GrammerAnalysis::buildTable()
 }
 
 void GrammerAnalysis::analysis(vector<string> omiga)
-{
-    cout << this->rule.firstEq << '\n';
+{   
     this->stack.push_back("$");
     this->stack.push_back("E");
     omiga.push_back("$");

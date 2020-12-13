@@ -1,5 +1,5 @@
-#ifndef GRAMANALYSER_H
-#define GRAMANALYSER_H
+#ifndef LEXICALANALYSIS_H
+#define LEXICALANALYSIS_H
 
 #include <iostream>
 #include <stdio.h>

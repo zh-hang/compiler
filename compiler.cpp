@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <string.h>
-#include "gramAnalyser.h"
+#include "LexicalAnalysis.h"
 // #define SIZE 10240 //默认大小
 int main()
 {

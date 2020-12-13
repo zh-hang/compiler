@@ -1,4 +1,4 @@
-#include "gramAnalyser.h"
+#include "LexicalAnalysis.h"
 
 int currentChar; // 当前标记
 int lineNum = 1; // 源码行号
